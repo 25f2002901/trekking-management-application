@@ -30,5 +30,5 @@ A Trekking Management Application web application that allows Admin, Trek Staff,
 9. *venv/ :* A virtual environment directory that contains the isolated Python environment for the project, including installed packages.
 
 ## ER Diagram for models.py:
-![ER Diagram]("trekking_erd.svg")
+![ER Diagram](/trekking_ERD.webp)
 
