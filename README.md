@@ -29,3 +29,6 @@ A Trekking Management Application web application that allows Admin, Trek Staff,
 8. *.gitignore :* A file specifying which files and directories should be ignored by Git version control, such as the database file and virtual environment.
 9. *venv/ :* A virtual environment directory that contains the isolated Python environment for the project, including installed packages.
 
+## ER Diagram for models.py:
+![ER Diagram]("C:\Users\krypt\Downloads\trekking_erd.svg")
+
