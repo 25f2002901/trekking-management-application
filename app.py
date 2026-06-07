@@ -6,8 +6,8 @@ from models.trek import Trek
 from werkzeug.security import generate_password_hash
 from routes.auth import bp
 from routes.admin import admin_bp
-from routes.staff import staff_bp
-from routes.user import user_bp
+# from routes.staff import staff_bp
+# from routes.user import user_bp
 
 app = Flask(__name__)
 
@@ -21,8 +21,8 @@ login_manager.login_message_category = "info" # Category for flash messages when
 
 app.register_blueprint(bp)
 app.register_blueprint(admin_bp)
-app.register_blueprint(staff_bp)
-app.register_blueprint(user_bp)
+# app.register_blueprint(staff_bp)
+# app.register_blueprint(user_bp)
 
 
 @login_manager.user_loader
@@ -34,7 +34,7 @@ with app.app_context():#Flask app requires an application context to perform dat
     db.create_all()
     admin = User.query.filter_by(email="admin123@gmail.com").first()
     if not admin:
-        admin = User(user_name="Admin",email="admin123@gmail.com", full_name= "Administrator",
+        admin = User(username="Admin",email="admin123@gmail.com", full_name= "Administrator",
             password=generate_password_hash("admin123"), role= "admin", approved= True)
         db.session.add(admin)
         db.session.commit()

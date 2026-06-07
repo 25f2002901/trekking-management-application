@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center mb-5">
+
+    <h1>Welcome to TrekVerse</h1>
+
+    <p class="lead">
+        Discover and book exciting trekking adventures.
+    </p>
+
+    {% if not current_user.is_authenticated %}
+
+    <a href="{{ url_for('auth.signin') }}" class="btn btn-primary">
+
+        Login
+
+    </a>
+
+    <a href="{{ url_for('auth.signup') }}" class="btn btn-success">
+
+        Register
+
+    </a>
+
+    {% endif %}
+
+</div>
+
+<h3>Open Treks</h3>
+
+<div class="row">
+
+    {% for trek in treks %}
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card h-100">
+
+            <div class="card-body">
+
+                <h5>{{ trek.trek_name }}</h5>
+
+                <p>
+                    <strong>Location:</strong>
+                    {{ trek.location }}
+                </p>
+
+                <p>
+                    <strong>Difficulty:</strong>
+                    {{ trek.difficulty }}
+                </p>
+
+                <p>
+                    <strong>Slots:</strong>
+                    {{ trek.available_slots }}
+                </p>
+
+                {% if current_user.is_authenticated
+                and current_user.role == "user" %}
+
+                <a href="{{ url_for('user.trek_details',
+            id=trek.id) }}" class="btn btn-outline-primary">
+
+                    View Trek
+
+                </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% if not treks %}
+
+<div class="alert alert-info">
+
+    No open treks available currently.
+
+</div>
+
+{% endif %}
+<hr>
+
+<footer class="text-center text-muted">
+
+    TrekVerse © 2026
+
+</footer>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Search</h2>
+
+<form method="GET">
+
+    <input
+    type="text"
+    name="query_param"
+    class="form-control mb-3"
+    placeholder="Search by ID or Name"
+    value="{{ keyword }}">
+    <select name="table" class="form-control mb-3">
+        <option value="user" selected>User</option>
+        <option value="staff">Staff</option>
+        <option value="trek">Trek</option>
+    </select>
+    <button
+    class="btn btn-primary">
+
+    Search
+
+    </button>
+
+</form>
+
+{% if query_param  and  table=="user"%}
+
+<hr>
+
+<h3>Users</h3>
+
+<table class="table table-bordered">
+
+<tr>
+<th>ID</th>
+<th>Username</th>
+<th>Name</th>
+<th>Email</th>
+</tr>
+
+{% for user in results['users'] %}
+
+<tr>
+<td>{{ user.user_id }}</td>
+<td>{{ user.username }}</td>
+<td>{{ user.full_name }}</td>
+<td>{{ user.email }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<hr>
+
+{% elif query_param and table=="staff" %}
+<h3>Staff</h3>
+
+<table class="table table-bordered">
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+</tr>
+
+{% for st in results['staff'] %}
+
+<tr>
+
+<td>{{ st.user_id }}</td>
+<td>{{ st.username }}</td>
+<td>{{ st.email }}</td>
+
+<td>
+
+{% if st.approved %}
+Approved
+{% else %}
+Pending
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<hr>
+{% elif query_param and table=="trek" %}
+<h3>Treks</h3>
+
+<table class="table table-bordered">
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Location</th>
+</tr>
+
+{% for trek in results['treks'] %}
+
+<tr>
+
+<td>{{ trek.trek_id }}</td>
+<td>{{ trek.trek_name }}</td>
+<td>{{ trek.location }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+{% endblock %}

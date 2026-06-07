@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Treks</h2>
+
+<a
+href="{{ url_for('admin.create_trek') }}"
+class="btn btn-primary mb-3">
+
+Create Trek
+
+</a>
+
+<table class="table table-bordered">
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Location</th>
+<th>Status</th>
+<th>Slots</th>
+<th>Staff</th>
+<th>Actions</th>
+
+</tr>
+
+{% for trek in treks %}
+
+<tr>
+
+<td>{{ trek.trek_id }}</td>
+<td>{{ trek.trek_name }}</td>
+<td>{{ trek.location }}</td>
+<td>{{ trek.status }}</td>
+<td>{{ trek.available_slots }}</td>
+<td>
+
+{% if trek.assigned_staff_id %}
+    {{ trek.assigned_staff.username }}
+{% else %}
+    Not Assigned
+{% endif %}
+
+</td>
+
+<td>
+
+<a
+href="{{ url_for('admin.update_trek', trek_id=trek.trek_id) }}"
+class="btn btn-warning btn-sm">
+
+Update
+
+</a>
+
+<a
+href="{{ url_for('admin.assign_staff',
+trek_id=trek.trek_id) }}"
+class="btn btn-info btn-sm">
+
+Assign
+
+</a>
+
+<a
+href="{{ url_for('admin.delete_trek',
+trek_id=trek.trek_id) }}"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

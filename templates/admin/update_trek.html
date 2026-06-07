@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Update Trek</h2>
+
+<form method="POST">
+
+    <input class="form-control mb-2" name="trek_name" value="{{ trek.trek_name }}">
+
+    <input class="form-control mb-2" name="location" value="{{ trek.location }}">
+
+    <select class="form-control mb-2" name="difficulty">
+
+        <option value="Easy" {% if trek.difficulty=="Easy" %} selected {% endif %}>
+            Easy
+        </option>
+
+        <option value="Moderate" {% if trek.difficulty=="Moderate" %} selected {% endif %}>
+            Moderate
+        </option>
+
+        <option value="Hard" {% if trek.difficulty=="Hard" %} selected {% endif %}>
+            Hard
+        </option>
+
+    </select>
+    <input type='number' class='form-control mb-2' name='duration' value='{{ trek.duration }}'>
+    <input type="number" class="form-control mb-2" name="available_slots" value="{{ trek.available_slots }}">
+    <select type="text" class="form-control mb-2" name="status">
+        <option value="Open" {% if trek.status=="open" %} selected {% endif %}>
+            Open
+        </option>
+        <option value="Completed" {% if trek.status=="completed" %} selected {% endif %}>
+            Completed
+        </option>
+        <option value="Closed" {% if trek.status=="closed" %} selected {% endif %}>
+            Closed
+        </option>
+    </select>
+    <input type="number" step='any' class="form-control mb-2" name="price" value="{{ trek.price }}">
+    <input type="date" name="start_date" class="form-control mb-2" value="{{ trek.start_date }}">
+    <input type="date" name="end_date" class="form-control mb-2" value="{{ trek.end_date }}">
+    <input type="text" class="form-control mb-2" name="notes" value="{{ trek.notes }}">
+    <button class="btn btn-warning">
+
+        Update Trek
+
+    </button>
+
+</form>
+
+{% endblock %}

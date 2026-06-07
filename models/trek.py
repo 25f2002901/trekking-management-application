@@ -8,12 +8,12 @@ class Trek(db.Model):
     difficulty = db.Column(db.String(50), nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     available_slots = db.Column(db.Integer, nullable=False)
-    assigned_staff_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    status = db.Column(db.String(50), nullable=False, default='pending') #'completed', 'open','closed'. 
+    assigned_staff_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False, default="")
+    status = db.Column(db.String(50), nullable=False, default='open') #'completed', 'open','closed'. 
     price = db.Column(db.Float, nullable=False, default=0)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    notes = db.Column(db.Text)
+    notes = db.Column(db.Text, default="No additional notes.")
     #Many-to-one relation with User(Staff) -> Multiple treks can have the same staff(not at the same time)
     assigned_staff = db.relationship('User',backref= "assigned_treks",lazy= True)
     #One-to-many relationship with bookings

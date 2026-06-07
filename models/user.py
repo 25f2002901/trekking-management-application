@@ -2,7 +2,7 @@ from models import db
 from flask_login import UserMixin
 from datetime import datetime
 
-class User(db.Model, UserMixin):
+class User(UserMixin, db.Model):
     __tablename__ = 'users' #if not specified, it will be 'User'(Class name) by default
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True, nullable=False)
@@ -16,6 +16,9 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     #One-to-many relationship with bookings
     bookings = db.relationship('Booking', backref='user', foreign_keys='Booking.user_id', lazy=True)#lazy=True means that the related objects will be loaded only when they are accessed, which can improve performance by avoiding unnecessary database queries.
+
+    def get_id(self):
+        return str(self.user_id)
     def __repr__(self):
         return f'<User {self.username}>' 
     #This is a string representation of the User object, which can be useful for debugging and logging. It will display the username when the object is printed.

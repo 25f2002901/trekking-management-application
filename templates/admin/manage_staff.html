@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Staff Management</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Approved</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for staff in staffs %}
+
+    <tr>
+
+        <td>{{ staff.user_id }}</td>
+        <td>{{ staff.username }}</td>
+        <td>{{ staff.email }}</td>
+
+        <td>
+            {% if staff.approved %}
+            Approved
+            {% else %}
+            Pending
+            {% endif %}
+        </td>
+
+        <td>
+
+            {% if not staff.approved %}
+
+            <a href="{{ url_for('admin.approve_staff', user_id=staff.user_id) }}" class="btn btn-success btn-sm">
+
+                Approve
+
+            </a>
+
+            {% endif %}
+
+            <a href="{{ url_for('admin.blacklist_user', user_id=staff.user_id) }}" class="btn btn-danger btn-sm">
+
+                Blacklist
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

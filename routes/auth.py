@@ -1,10 +1,10 @@
 from flask import (render_template, request, redirect, url_for, Blueprint, flash)
-from flask_login import (login_user, logout_user, login_required, current_user)
-from werkzeug.security import (generate_password_hash, check_password_hash)
+from flask_login import (login_user, logout_user, login_required)
+from werkzeug.security import (generate_password_hash,check_password_hash)
 from models import db
 from models.user import User
 
-bp = Blueprint("auth",__name__)
+bp = Blueprint("auth",__name__,url_prefix= "/auth")
 
 @bp.route("/signup",methods= ['GET',"POST"])
 def signup():
@@ -20,13 +20,13 @@ def signup():
             flash('Invalid Request! Admin cannot be registered.', 'danger')
             return redirect(url_for("auth.signup"))
 
-        already_present = db.Session.query.get(User).filter_by(email = email).first()
+        already_present = db.session.query(User).filter_by(email = email).first()
         if already_present:
-            flash('User with same credentials already present./nPlease Signin or Register with different credentials.','danger')
+            flash('User with same credentials already present. Please Sign in or Register with different credentials.','danger')
             return redirect(url_for('auth.signup'))
         
-        user = User(username= username, email= email, password= password,
-                    full_name= full_name, contact_no= contact_no)
+        user = User(username= username, email= email, password= generate_password_hash(password),
+                    full_name= full_name, contact_no= contact_no, role= role)
         
         if role == 'user':
             user.approved = True
@@ -43,7 +43,7 @@ def signin():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        user = db.session.query.get(User).filter_by(email = email).first()
+        user = db.session.query(User).filter_by(email = email).first()
         if not user:
             flash("Invalid Credentials! Unable to Login.",'danger')
             return redirect(url_for('auth.signin'))
@@ -66,7 +66,8 @@ def signin():
             return redirect(url_for('staff.staff_dashboard'))
         else:
             return redirect(url_for('user.user_dashboard'))
-        
+    return render_template('auth/signin.html')
+
 @bp.route("/logout")
 @login_required
 def logout():

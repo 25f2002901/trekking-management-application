@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Assign Staff</h2>
+
+<form method="POST">
+
+<select
+name="staff_id"
+class="form-control mb-3">
+
+{% for staff in staffs %}
+
+<option value="{{ staff.user_id }}">
+    {{ staff.username }}
+</option>
+
+{% endfor %}
+
+</select>
+
+<button
+class="btn btn-primary">
+
+Assign
+
+</button>
+
+</form>
+
+{% endblock %}

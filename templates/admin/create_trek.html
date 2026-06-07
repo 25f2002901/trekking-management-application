@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Create Trek</h2>
+
+<form method="POST">
+
+    <input class="form-control mb-2" name="trek_name" placeholder="Trek Name">
+
+    <input class="form-control mb-2" name="location" placeholder="Location">
+
+    <select class="form-control mb-2" name="difficulty">
+
+        <option value="Easy">Easy</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Hard">Hard</option>
+
+    </select>
+
+    <input type="number" class="form-control mb-2" name="duration" placeholder="Duration">
+
+    <input type="number" class="form-control mb-2" name="available_slots" placeholder="Available Slots">
+
+    <select class="form-control mb-2" name="status">
+        <option value="open">Open</option>
+        <option value="completed">Completed</option>
+        <option value="closed">Closed</option>
+    </select>
+    <input type="number" class="form-control mb-2" name="price" placeholder="Price">
+
+    <textarea class="form-control mb-2" name="notes" placeholder="Notes">
+    </textarea>
+
+    <input type="date" class="form-control mb-2" name="start_date">
+
+    <input type="date" class="form-control mb-2" name="end_date">
+
+    <button class="btn btn-success">
+
+        Create
+
+    </button>
+
+</form>
+
+{% endblock %}
