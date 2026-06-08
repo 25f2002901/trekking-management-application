@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<p class=".h2 text-center "><kbd>Hello, {{ current_user.full_name }}!</kbd></p>
+<h2>Assigned Treks</h2>
+<table class="table">
+    <th>Name</th>
+    <th>Status</th>
+    <th>Avl. Slots</th>
+    <th>Actions</th>
+    {% for trek in treks %}
+    <tr>
+        <td>{{ trek.trek_name }}</td>
+        <td>{{ trek.status | capitalize }}</td>
+        <td>{{ trek.available_slots }}</td>
+        <td>
+            <a href="{{ url_for('staff.update_trek', trek_id= trek.trek_id) }}"
+                class="btn btn-sm btn-warning">Update</a>
+            <a href="{{ url_for('staff.booked_treks', trek_id= trek.trek_id) }}"
+                class="btn btn-sm btn-info">Bookings</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

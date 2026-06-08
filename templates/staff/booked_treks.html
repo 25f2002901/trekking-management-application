@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{trek.trek_name}} Bookings</h2>
+<table class="table table-bordered">
+    <th>Booking ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Status</th>
+    {% for booking in bookings %}
+    <tr>
+        <td>{{booking.id}}</td>
+        <td>{{booking.user.full_name}}</td>
+        <td>{{booking.user.email}}</td>
+        <td>{{booking.status}}</td>
+    </tr>
+    <h2>{{trek.trek_name}} Trek</h2>
+    <strong>Total Bookings: {{bookings|length}}</strong>
+    {% endfor %}
+</table>
+{% endblock %}

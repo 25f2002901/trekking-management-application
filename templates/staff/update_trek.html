@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Update Trek</h2>
+<form method="post">
+    <label for="available_slots"></label>
+    <input type="number" name="available_slots" class="form-control mb-3" value="{{trek.available_slots}}">
+    <label for="status"></label>
+    <select name="status" class="form-control mb-3">
+        <option value="open">Open</option>
+        <option value="closed">Closed</option>
+        <option value="completed">Completed</option>
+    </select>
+    <button type="submit" class="btn btn-primary">
+        Update
+    </button>
+</form>
+{% endblock %}

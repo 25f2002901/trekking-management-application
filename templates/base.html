@@ -55,17 +55,11 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('admin.search_database') }}">
-                        Search
-                    </a>
-                </li>
-
-                <!-- {% elif current_user.role == "staff" %}
+                {% elif current_user.role == "staff" %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('staff.dashboard') }}">
-                        My Treks
+                    <a class="nav-link" href="{{ url_for('staff.staff_dashboard') }}">
+                        Assigned Treks
                     </a>
                 </li>
 
@@ -93,11 +87,11 @@
                     <a class="nav-link" href="{{ url_for('user.profile') }}">
                         Profile
                     </a>
-                </li> 
+                </li>
 
-                {% endif %} -->
+                {% endif %}
 
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">
                         Logout
                     </a>
@@ -117,7 +111,7 @@
                     </a>
                 </li>
 
-                {% endif %} 
+                {% endif %}
 
             </ul>
 

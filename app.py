@@ -6,7 +6,7 @@ from models.trek import Trek
 from werkzeug.security import generate_password_hash
 from routes.auth import bp
 from routes.admin import admin_bp
-# from routes.staff import staff_bp
+from routes.staff import staff_bp
 # from routes.user import user_bp
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ login_manager.login_message_category = "info" # Category for flash messages when
 
 app.register_blueprint(bp)
 app.register_blueprint(admin_bp)
-# app.register_blueprint(staff_bp)
+app.register_blueprint(staff_bp)
 # app.register_blueprint(user_bp)
 
 
@@ -43,7 +43,7 @@ with app.app_context():#Flask app requires an application context to perform dat
 @app.route("/")
 def home():
     treks = Trek.query.filter_by(
-        status="Open"
+        status="open"
     ).limit(5).all()
 
     return render_template(
