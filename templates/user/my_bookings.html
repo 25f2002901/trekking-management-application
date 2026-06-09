@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<p><h2>My Bookings</h2></p>
+<hr>
+{% if bookings %}
+    <table class="table">
+        <th>Trek</th>
+        <th>Booking Date</th>
+        <th>Booking Status</th>
+        <th>Trek Status</th>
+        <th>Actions</th>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.trek.trek_name }}</td>
+                <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+                <td>{{ booking.status | capitalize}}</td>
+                <td>{{ booking.trek.status | capitalize }}</td>
+                <td>
+                    <a href="{{ url_for('user.cancel_booking', booking_id=booking.booking_id) }}" class="btn btn-danger">Cancel</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p><h2>No bookings found.</h2></p>
+{% endif %}
+{% endblock %}

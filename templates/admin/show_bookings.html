@@ -4,7 +4,7 @@
 
 <h2>All Bookings</h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
 
 <tr>
 
@@ -23,7 +23,7 @@
 <td>{{ booking.booking_id }}</td>
 <td>{{ booking.user_id }}</td>
 <td>{{ booking.trek_id }}</td>
-<td>{{ booking.status }}</td>
+<td>{{ booking.status | capitalize }}</td>
 <td>{{ booking.booking_date }}</td>
 
 </tr>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+ <h2>Update Profile</h2>
+<form method="POST">
+    <label for="username">Username</label>
+    <input name="username" class="form-control mb-2" value="{{ current_user.username }}">
+    <label for="full_name">Name</label>
+    <input name="full_name" class="form-control mb-2" value="{{ current_user.full_name }}">
+    <label for="email">Email</label>
+    <input name="email" class="form-control mb-2" value="{{ current_user.email }}">
+    <label for="contact_no">Contact</label>
+    <input name="contact_no" class="form-control mb-2" value="{{ current_user.contact_no }}">
+    <button class="btn btn-primary btn-success">Update</button>
+</form>
+
+{% endblock %}
