@@ -6,36 +6,6 @@ from models.user import User
 
 bp = Blueprint("auth",__name__,url_prefix= "/auth")
 
-@bp.route("/signup",methods= ['GET',"POST"])
-def signup():
-    if request.method == 'POST':
-        username = request.form.get("username")
-        email = request.form.get('email')
-        password = request.form.get('password')
-        full_name = request.form.get('full_name')
-        contact_no = request.form.get('contact_no')
-        role = request.form.get("role")
-
-        if role == "admin":
-            flash('Invalid Request! Admin cannot be registered.', 'danger')
-            return redirect(url_for("auth.signup"))
-
-        already_present = db.session.query(User).filter_by(email = email).first()
-        if already_present:
-            flash('User with same credentials already present. Please Sign in or Register with different credentials.','danger')
-            return redirect(url_for('auth.signup'))
-        
-        user = User(username= username, email= email, password= generate_password_hash(password),
-                    full_name= full_name, contact_no= contact_no, role= role)
-        
-        if role == 'user':
-            user.approved = True
-        db.session.add(user)
-        db.session.commit()
-        flash("Registration Successful! Please Login.",'success')
-        redirect(url_for('auth.signin'))
-    
-    return render_template('auth/signup.html')
 
 @bp.route("/signin", methods= ['GET','POST'])
 def signin():
@@ -67,6 +37,37 @@ def signin():
         else:
             return redirect(url_for('user.user_dashboard'))
     return render_template('auth/signin.html')
+
+@bp.route("/signup",methods= ['GET',"POST"])
+def signup():
+    if request.method == 'POST':
+        username = request.form.get("username")
+        email = request.form.get('email')
+        password = request.form.get('password')
+        full_name = request.form.get('full_name')
+        contact_no = request.form.get('contact_no')
+        role = request.form.get("role")
+
+        if role == "admin":
+            flash('Invalid Request! Admin cannot be registered.', 'danger')
+            return redirect(url_for("auth.signup"))
+
+        already_present = db.session.query(User).filter_by(email = email).first()
+        if already_present:
+            flash('User with same credentials already present. Please Sign in or Register with different credentials.','danger')
+            return redirect(url_for('auth.signup'))
+        
+        user = User(username= username, email= email, password= generate_password_hash(password),
+                    full_name= full_name, contact_no= contact_no, role= role)
+        
+        if role == 'user':
+            user.approved = True
+        db.session.add(user)
+        db.session.commit()
+        flash("Registration Successful! Please Login.",'success')
+        return redirect(url_for('auth.signin'))
+    
+    return render_template('auth/signup.html')
 
 @bp.route("/logout")
 @login_required

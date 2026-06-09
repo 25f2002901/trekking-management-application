@@ -66,23 +66,29 @@ def update_trek(trek_id):
         trek.difficulty = request.form.get("difficulty")
         trek.duration = int(request.form.get("duration"))
         trek.available_slots = int(request.form.get("available_slots"))
-        trek.status = request.form.get("status")
+        trek.status = request.form.get("status").lower()
         trek.price = float(request.form.get("price"))
         trek.start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date()
         trek.end_date = datetime.strptime(request.form.get("end_date"), "%Y-%m-%d").date()
         trek.notes = request.form.get("notes")
+
+        if trek.status in ["completed","closed"]:
+            trek.available_slots = 0
+            Booking.query.filter_by(trek_id= trek_id).update({"status": "completed"})
+            db.session.commit()
+
         db.session.commit()
         flash("Trek updated successfully!", "success")
         return redirect(url_for("admin.manage_treks"))
     return render_template("admin/update_trek.html", trek=trek)
 
-@admin_bp.route("/delete_trek/<int:trek_id>", methods= ["POST"])
+@admin_bp.route("/delete_trek/<int:trek_id>")
 @login_required
 def delete_trek(trek_id):
     if not is_admin():
         return redirect(url_for("auth.signin"))
     trek = Trek.query.get_or_404(trek_id)
-    Booking.query.filter_by(trek_id= trek_id).update({"trek_id": None, "status": "cancelled"})
+    Booking.query.filter_by(trek_id= trek_id).delete()
     db.session.delete(trek)
     db.session.commit()
     flash("Trek Deleted!", "danger")
@@ -134,7 +140,7 @@ def assign_staff(trek_id):
     if not is_admin():
         return redirect(url_for("auth.signin"))
     trek = Trek.query.get_or_404(trek_id)
-    staff = User.query.filter_by(role= "staff", approved= True).all()
+    staff = User.query.filter_by(role= "staff", approved= True, blacklisted= False).all()
     if request.method == "POST":
         trek.assigned_staff_id = int(request.form.get("staff_id"))
         db.session.commit()

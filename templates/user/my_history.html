@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Booking History</h2>
+<hr>
+{% if history %}
+<table class="table table-striped">
+    <tr>
+        <th>Trek</th>
+        <th>Booking Date</th>
+        <th>Booking Status</th>
+        <th>Trek Status</th>
+    </tr>
+    {% for booking in history %}
+    <tr>
+        <td>{{ booking.trek.trek_name }}</td>
+        <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+        <td>{{ booking.status | capitalize}}</td>
+        <td>{{ booking.trek.status| capitalize }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No bookings found.</p>
+{% endif %}
+{% endblock %}

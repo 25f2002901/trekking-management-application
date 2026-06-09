@@ -9,13 +9,12 @@
     <th>Status</th>
     {% for booking in bookings %}
     <tr>
-        <td>{{booking.id}}</td>
+        <td>{{booking.booking_id}}</td>
         <td>{{booking.user.full_name}}</td>
         <td>{{booking.user.email}}</td>
-        <td>{{booking.status}}</td>
+        <td>{{booking.status|capitalize}}</td>
     </tr>
-    <h2>{{trek.trek_name}} Trek</h2>
-    <strong>Total Bookings: {{bookings|length}}</strong>
     {% endfor %}
 </table>
+<strong>Total Bookings: {{bookings|length}}</strong>
 {% endblock %}

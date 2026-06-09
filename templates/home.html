@@ -60,8 +60,7 @@
                 {% if current_user.is_authenticated
                 and current_user.role == "user" %}
 
-                <a href="{{ url_for('user.trek_details',
-            id=trek.id) }}" class="btn btn-outline-primary">
+                <a href="{{ url_for('user.user_dashboard') }}" class="btn btn-outline-primary">
 
                     View Trek
 

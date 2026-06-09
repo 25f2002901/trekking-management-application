@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Profile</h2>
+<p class="lead"><strong>Username:</strong> {{ current_user.username }}</p>
+<p class="lead"><strong>Name:</strong> {{ current_user.full_name }}</p>
+<p class="lead"><strong>Email:</strong> {{ current_user.email }}</p>
+<p class="lead"><strong>Contact:</strong> {{ current_user.contact_no if current_user.contact_no else "Not Provided" }}</p>
+<button type="submit" class="btn"><a href="{{ url_for('user.update_profile') }}" class="btn  btn-warning">Update Profile</a></button>
+<button class="btn"><a href="{{ url_for('user.delete_profile') }}" class="btn btn-danger">Delete Profile</a></button>
+
+{% endblock %}
