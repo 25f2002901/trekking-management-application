@@ -102,7 +102,7 @@ def manage_users():
     users = User.query.filter_by(role= "user").all()
     return render_template("admin/manage_users.html", users= users)
 
-@admin_bp.route("/blacklist_user/<int:user_id>", methods= ["POST"])
+@admin_bp.route("/blacklist_user/<int:user_id>")
 @login_required
 def blacklist_user(user_id):
     if not is_admin():
@@ -113,7 +113,7 @@ def blacklist_user(user_id):
         db.session.query(Trek).filter_by(assigned_staff_id = user.user_id).update({"assigned_staff_id": None})
     db.session.commit()
     flash("User blacklisted successfully!", "warning")
-    return redirect(url_for("admin.manage_users"))
+    return redirect(url_for("admin.manage_staff"))
 
 @admin_bp.route("/manage_staff")
 @login_required
@@ -139,10 +139,20 @@ def approve_staff(user_id):
 def assign_staff(trek_id):
     if not is_admin():
         return redirect(url_for("auth.signin"))
+
     trek = Trek.query.get_or_404(trek_id)
     staff = User.query.filter_by(role= "staff", approved= True, blacklisted= False).all()
+
     if request.method == "POST":
-        trek.assigned_staff_id = int(request.form.get("staff_id"))
+        staff_id = int(request.form.get("staff_id"))
+        asgn_staff = db.session.query(Trek).filter_by(status= 'open').with_entities(Trek.assigned_staff_id).all()
+        # Same result: db.session.query(Trek.assigned_staff_id).filter_by(status= 'open').all()
+        l = [x[0] for x in asgn_staff if x[0] is not None]
+        
+        if staff_id in l:
+            flash("Staff already assigned in an open trek!", "danger")
+            return redirect(url_for("admin.manage_treks"))
+        trek.assigned_staff_id = staff_id
         db.session.commit()
         flash("Staff assigned successfully!", "success")
         return redirect(url_for("admin.manage_treks"))

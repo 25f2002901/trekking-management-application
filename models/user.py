@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     full_name = db.Column(db.String(255), nullable=False)
-    contact_no = db.Column(db.String(20)) # Assuming contact number is stored as a string to accommodate different formats like plus sign, dashes, etc.
+    contact_no = db.Column(db.String(20), default="") # Assuming contact number is stored as a string to accommodate different formats like plus sign, dashes, etc.
     role = db.Column(db.String(50), nullable=False) # e.g., 'admin', 'user', etc.
     approved = db.Column(db.Boolean, default=False, nullable=False)
     blacklisted = db.Column(db.Boolean, default=False, nullable=False)

@@ -6,26 +6,23 @@
 
 <form method="POST">
 
-<select
-name="staff_id"
-class="form-control mb-3">
+    <select name="staff_id" class="form-control mb-3">
 
-{% for staff in staffs %}
+        {% for staff in staffs %}
 
-<option value="{{ staff.user_id }}">
-    {{ staff.username }}
-</option>
+        <option value="{{ staff.user_id }}">
+            {{ staff.username }}
+        </option>
 
-{% endfor %}
+        {% endfor %}
 
-</select>
+    </select>
 
-<button
-class="btn btn-primary">
+    <button class="btn btn-primary">
 
-Assign
+        Assign
 
-</button>
+    </button>
 
 </form>
 

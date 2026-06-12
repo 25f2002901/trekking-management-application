@@ -42,12 +42,15 @@
 
             {% endif %}
 
+            {%if staff.blacklisted %}
+            <span style="color: red;"> Blacklisted </span>
+            {% else %}
             <a href="{{ url_for('admin.blacklist_user', user_id=staff.user_id) }}" class="btn btn-danger btn-sm">
 
                 Blacklist
 
             </a>
-
+            {% endif %}
         </td>
 
     </tr>

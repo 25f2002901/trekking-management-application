@@ -22,7 +22,9 @@
         <td>{{ user.username }}</td>
         <td>{{ user.full_name }}</td>
         <td>{{ user.email }}</td>
-
+        {% if user.blacklisted %}
+        <td style="color: red;">Blacklisted</td>
+        {% else %}
         <td>
 
             <a href="{{ url_for('admin.blacklist_user', user_id=user.user_id) }}" class="btn btn-danger btn-sm">
@@ -32,7 +34,7 @@
             </a>
 
         </td>
-
+        {% endif %}
     </tr>
 
     {% endfor %}
