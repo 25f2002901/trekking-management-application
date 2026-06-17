@@ -48,6 +48,9 @@ def create_trek():
         start_date = datetime.strptime(request.form.get("start_date"), "%Y-%m-%d").date(),
         end_date = datetime.strptime(request.form.get("end_date"), "%Y-%m-%d").date(),
         notes = request.form.get("notes"))
+        if trek.end_date < trek.start_date:
+            flash("Please check the start and end dates!", 'danger')
+            return redirect(request.referrer or url_for('admin.create_trek'))
         db.session.add(trek)
         db.session.commit()
         flash("Trek created successfully!", "success")
@@ -76,13 +79,15 @@ def update_trek(trek_id):
             trek.available_slots = 0
             Booking.query.filter_by(trek_id= trek_id).update({"status": "completed"})
             db.session.commit()
-
+        if trek.end_date < trek.start_date :
+            flash("Please check the start and end dates!",'danger')
+            return redirect(request.referrer or url_for('admin.manage_treks'))
         db.session.commit()
         flash("Trek updated successfully!", "success")
         return redirect(url_for("admin.manage_treks"))
     return render_template("admin/update_trek.html", trek=trek)
 
-@admin_bp.route("/delete_trek/<int:trek_id>")
+@admin_bp.route("/delete_trek/<int:trek_id>", methods=["POST"])
 @login_required
 def delete_trek(trek_id):
     if not is_admin():
@@ -102,7 +107,7 @@ def manage_users():
     users = User.query.filter_by(role= "user").all()
     return render_template("admin/manage_users.html", users= users)
 
-@admin_bp.route("/blacklist_user/<int:user_id>")
+@admin_bp.route("/blacklist_user/<int:user_id>",methods=['POST'])
 @login_required
 def blacklist_user(user_id):
     if not is_admin():

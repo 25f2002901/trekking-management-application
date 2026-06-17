@@ -4,80 +4,91 @@
 
 <h2>Treks</h2>
 
-<a
-href="{{ url_for('admin.create_trek') }}"
-class="btn btn-primary mb-3">
+<a href="{{ url_for('admin.create_trek') }}" class="btn btn-primary mb-3">
 
-Create Trek
+    Create Trek
 
 </a>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 
-<tr>
+    <tr>
 
-<th>ID</th>
-<th>Name</th>
-<th>Location</th>
-<th>Status</th>
-<th>Slots</th>
-<th>Staff</th>
-<th>Actions</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Slots</th>
+        <th>Staff</th>
+        <th>Actions</th>
 
-</tr>
+    </tr>
 
-{% for trek in treks %}
+    {% for trek in treks %}
 
-<tr>
+    <tr>
 
-<td>{{ trek.trek_id }}</td>
-<td>{{ trek.trek_name }}</td>
-<td>{{ trek.location }}</td>
-<td>{{ trek.status| capitalize }}</td>
-<td>{{ trek.available_slots }}</td>
-<td>
+        <td>{{ trek.trek_id }}</td>
+        <td>{{ trek.trek_name }}</td>
+        <td>{{ trek.location }}</td>
+        <td>
+            {% if trek.status == "open" %}
 
-{% if trek.assigned_staff_id %}
-    {{ trek.assigned_staff.username }}
-{% else %}
-    Not Assigned
-{% endif %}
+            <span class="badge bg-success">
+                Open
+            </span>
 
-</td>
+            {% elif trek.status == "closed" %}
 
-<td>
+            <span class="badge bg-warning text-dark">
+                Closed
+            </span>
 
-<a
-href="{{ url_for('admin.update_trek', trek_id=trek.trek_id) }}"
-class="btn btn-warning btn-sm">
+            {% elif trek.status == "completed" %}
 
-Update
+            <span class="badge bg-primary">
+                Completed
+            </span>
+            {% endif %}
+        </td>
+        <td>{{ trek.available_slots }}</td>
+        <td>
 
-</a>
+            {% if trek.assigned_staff_id %}
+            {{ trek.assigned_staff.username }}
+            {% else %}
+            Not Assigned
+            {% endif %}
 
-<a
-href="{{ url_for('admin.assign_staff',
-trek_id=trek.trek_id) }}"
-class="btn btn-info btn-sm">
+        </td>
 
-Assign
+        <td>
 
-</a>
+            <a href="{{ url_for('admin.update_trek', trek_id=trek.trek_id) }}" class="btn btn-warning btn-sm">
 
-<a
-href="{{ url_for('admin.delete_trek',
-trek_id=trek.trek_id) }}"
-class="btn btn-danger btn-sm">
+                Update
 
-Delete
+            </a>
 
-</a>
+            <a href="{{ url_for('admin.assign_staff',
+trek_id=trek.trek_id) }}" class="btn btn-info btn-sm">
 
-</td>
+                Assign
 
-</tr>
+            </a>
 
-{% endfor %}
+            <a href="{{ url_for('admin.delete_trek',
+trek_id=trek.trek_id) }}" class="btn btn-danger btn-sm">
+
+                Delete
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
 
 </table>
 

@@ -1,5 +1,5 @@
 from flask import (render_template, request, redirect, url_for, Blueprint, flash)
-from flask_login import (login_required, current_user)
+from flask_login import (logout_user,login_required, current_user)
 from models import db
 from models.trek import Trek
 from models.user import User
@@ -46,18 +46,6 @@ def update_profile():
         flash("Profile Updated", "success")
         return redirect(url_for("user.show_profile"))
     return render_template("user/update_profile.html", profile=profile, method= request.method)
-
-@user_bp.route("/delete_profile")
-@login_required
-def delete_profile():
-    if not is_user():
-        flash("Unauthorized Access", "danger")
-        return redirect("/")
-    profile = User.query.get_or_404(current_user.user_id)
-    db.session.delete(profile)
-    db.session.commit()
-    flash("Profile Deleted", "success")
-    return redirect("/")
 
 @user_bp.route("/my_bookings")
 @login_required

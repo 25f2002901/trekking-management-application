@@ -13,13 +13,14 @@ def is_staff():
 @staff_bp.route("/dashboard")
 @login_required
 def staff_dashboard():
-    if not is_staff:
+    if not is_staff():
         flash("Unauthorized Access", "danger")
         return redirect(url_for("auth.signin"))
     assigned_treks = db.session.query(Trek).filter_by(assigned_staff_id = current_user.user_id).all()
     return render_template("staff/staff_dashboard.html", treks = assigned_treks)
 
 @staff_bp.route("/booked_treks/<int:trek_id>")
+@login_required
 def booked_treks(trek_id):
     if not is_staff():
         flash("Unauthorized Access", "danger")
@@ -33,6 +34,7 @@ def booked_treks(trek_id):
     return render_template("staff/booked_treks.html", trek = trek, bookings = booking)
 
 @staff_bp.route("/update_trek/<int:trek_id>", methods = ["GET", "POST"])
+@login_required
 def update_trek(trek_id):
     if not is_staff():
         flash("Unauthorized Access", "danger")
