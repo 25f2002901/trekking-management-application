@@ -1,34 +1,376 @@
-## Problem:
-Adventure organizations require efficient systems to manage trekking activities involving trek organizers, staff, and participants. Currently, many trekking groups rely on spreadsheets, phone calls, or manual coordination, which makes it difficult to manage trek approvals, track bookings, avoid overbooking, and maintain trek history.
+# TrekVerse – Trekking Management Application
 
-## Solution:
-A Trekking Management Application web application that allows Admin, Trek Staff, and Users (Trekkers) to interact with the system based on their roles to help manage trekking activities in their respective areas of interest efficiently.
+## Problem Statement
 
-## Python Packages used for this web app:
-* Flask for application back-end
-* Jinja2 templating, HTML, CSS and Bootstrap for application front-end
-* SQLite for database
-* SQLAlchemy for database management and ORM (Object-Relational Mapping)
-* Flask-Login for user authentication and session management
-* Werkzeug.Security for password hashing and verifying User credentials.
-* os for path configurations.
+Adventure organizations require efficient systems to manage trekking activities involving trek organizers, staff members, and participants. Many trekking groups still rely on spreadsheets, phone calls, and manual coordination, which makes it difficult to:
 
-## Terminology of different roles:
-1. **Admin:** A user with the highest level of access who manages the entire trekking system.
-2. **Trek Staff:** A staff member responsible for managing and coordinating assigned treks.
-3. **User (Trekker):** A participant who books and participates in trekking activities.
+- Manage trek approvals and assignments
+- Track participant bookings
+- Prevent overbooking
+- Maintain trek history
+- Monitor trek status updates
+- Manage staff approvals and user access
 
-## Purpose of each sub-folder or file that are present in this repository:
-1. *models/ :* Programmatic representation of the underlying database structure and relationships.
-2. *app.py :* The main application file that contains the Flask application and routes.
-3. *static/ :* Contains static files such as CSS, JavaScript, and images used in the application.
-4. *templates/ :* Contains HTML templates for rendering the web pages of the application.
-5. *README.md :* This file, providing an overview of the project, its purpose, and instructions for setup and usage.
-6. *requirements.txt :* A file listing the Python packages required to run the application, which can be installed using pip.
-7. *instance/ :* Contains the SQLite database file and any instance-specific configuration files.
-8. *.gitignore :* A file specifying which files and directories should be ignored by Git version control, such as the database file and virtual environment.
-9. *venv/ :* A virtual environment directory that contains the isolated Python environment for the project, including installed packages.(Did not push)
-10. *routes/ :* Contains the Role-Based Access routes for this application.
-11. *config.py :* Contains Database URI for the sqlite database file.
-* ==> **Note:** For production use, secret keys are kept in .env folder but I'm putting it inside config.py since this application is intended for development purposes only.
+Such manual processes are time-consuming, error-prone, and difficult to scale.
 
+---
+
+## Proposed Solution
+
+TrekVerse is a role-based Trekking Management Application that enables Administrators, Trek Staff, and Trekkers to interact with the system according to their responsibilities.
+
+The application centralizes trek management and provides a streamlined workflow for creating treks, assigning staff, managing bookings, and tracking trekking activities.
+
+---
+
+# User Roles
+
+## 1. Admin
+
+The Administrator is the highest authority in the system and is responsible for managing all trekking activities.
+
+### Features
+
+- Create, edit, and delete treks
+- Approve or reject trek staff registrations
+- Assign staff members to treks
+- View all users, staff members, and bookings
+- Search users, staff, and treks by ID or name
+- Blacklist users or staff members when necessary
+- Monitor historical trekking and booking data
+
+---
+
+## 2. Trek Staff
+
+Trek Staff members are responsible for managing assigned trekking activities.
+
+### Features
+
+- Register and log in
+- Access dashboard after administrator approval
+- View assigned treks
+- Update trek status
+- Update available slots
+- View registered participants
+- Start and complete trekking events
+
+---
+
+## 3. User (Trekker)
+
+Users are participants who register for trekking events.
+
+### Features
+
+- Register and log in
+- Browse available treks
+- Search and filter treks
+- Book trekking events
+- View booking status
+- View trekking history
+- Update personal profile information
+
+---
+
+# Technologies Used
+
+| Technology | Purpose |
+|------------|----------|
+| Flask | Backend web framework |
+| SQLite | Database management |
+| SQLAlchemy | ORM and database abstraction |
+| Flask-Login | Authentication and session management |
+| Werkzeug Security | Password hashing and verification |
+| Jinja2 | Dynamic template rendering |
+| Bootstrap 5 | Responsive frontend styling |
+| HTML5 | Page structure |
+| CSS3 | Additional styling |
+| Python os Module | File path and configuration management |
+
+---
+
+# Project Structure
+
+## models/
+
+Contains SQLAlchemy models representing database tables and relationships.
+
+### Included Models
+
+- User
+- Trek
+- Booking
+
+---
+
+## routes/
+
+Contains role-based Flask Blueprints.
+
+### Included Route Modules
+
+- auth.py
+- admin.py
+- staff.py
+- user.py
+
+---
+
+## templates/
+
+Contains Jinja2 templates used to render dynamic web pages.
+
+### Sections
+
+- Authentication Pages
+- Admin Dashboard
+- Staff Dashboard
+- User Dashboard
+
+---
+
+## static/
+
+Contains application assets such as:
+
+- CSS files
+- Images
+- Icons
+
+---
+
+## instance/
+
+Contains the SQLite database file generated by the application.
+
+---
+
+## app.py
+
+Application entry point responsible for:
+
+- Flask initialization
+- Database initialization
+- Login manager configuration
+- Blueprint registration
+- Admin account creation
+
+---
+
+## config.py
+
+Contains application configuration settings including:
+
+- Database URI
+- Secret Key
+- Flask configuration variables
+
+> **Note:** For production deployments, secret keys should be stored using environment variables. Since this application is intended for educational and development purposes, the secret key is maintained within the configuration file.
+
+---
+
+## requirements.txt
+
+Contains all Python dependencies required to run the project.
+
+Install them using:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## README.md
+
+Provides project documentation, setup instructions, architecture overview, and implementation details.
+
+---
+
+## .gitignore
+
+Specifies files and folders that should not be tracked by Git.
+
+Examples:
+
+- Database files
+- Virtual environments
+- Cache files
+
+---
+
+## venv/
+
+Local Python virtual environment used during development.
+
+Not included in the repository.
+
+---
+
+# Database Design
+
+## User
+
+Stores administrators, trek staff, and trekkers.
+
+### Attributes
+
+- id
+- name
+- email
+- password
+- contact
+- role
+- approved
+- blacklisted
+- created_at
+
+---
+
+## Trek
+
+Stores trekking event information.
+
+### Attributes
+
+- id
+- name
+- location
+- difficulty
+- duration
+- available_slots
+- status
+- description
+- start_date
+- end_date
+- staff_id
+
+---
+
+## Booking
+
+Stores trek booking records.
+
+### Attributes
+
+- id
+- booking_date
+- status
+- user_id
+- trek_id
+
+---
+
+# Key Functionalities
+
+## Authentication
+
+- User Registration
+- Staff Registration
+- Secure Login
+- Logout
+- Password Hashing
+
+---
+
+## Trek Management
+
+- Trek Creation
+- Trek Modification
+- Trek Deletion
+- Trek Assignment
+
+---
+
+## Booking Management
+
+- Booking Creation
+- Duplicate Booking Prevention
+- Slot Availability Validation
+- Booking History Tracking
+
+---
+
+## Role-Based Access Control
+
+The system restricts functionality according to user roles and authorization status.
+
+Examples:
+
+- Only administrators can assign staff
+- Only approved staff can access staff dashboards
+- Only assigned staff can manage a trek
+- Blacklisted accounts are denied access
+
+---
+
+# Development Challenges and Solutions
+
+During development, several challenges were encountered and resolved:
+
+### Schema Evolution Problems
+
+As new fields such as approval status, blacklist status, and timestamps were introduced, database schema mismatches resulted in missing-column errors. The database schema was updated and recreated to maintain consistency with the application models.
+
+### Authentication Integration
+
+Flask-Login integration required careful handling of user loading, session management, and role-based access checks to ensure secure authentication workflows.
+
+### Staff Approval Workflow
+
+Ensuring that staff members could register while preventing dashboard access before administrator approval required additional authorization logic and validation checks.
+
+### Trek Assignment Validation
+
+The assignment workflow was designed to ensure that only approved staff members could be assigned to treks while preserving trek ownership and access restrictions.
+
+### Booking Constraints
+
+Logic was implemented to prevent:
+
+- Duplicate bookings
+- Booking closed treks
+- Booking treks with no available slots
+
+This ensured consistent booking records and prevented overbooking.
+
+### Search Functionality
+
+Search capabilities were implemented for users, staff members, and treks using flexible filtering mechanisms that support searches by both identifiers and names.
+
+---
+
+# Setup Instructions
+
+## 1. Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+## 2. Create and activate a virtual environment
+
+```bash
+python -m venv venv
+```
+
+## 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4. Run the application
+
+```bash
+python app.py
+```
+
+## 5. Open the application
+
+```text
+http://127.0.0.1:5000
+```
+
+---

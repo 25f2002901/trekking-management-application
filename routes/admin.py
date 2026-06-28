@@ -87,7 +87,7 @@ def update_trek(trek_id):
         return redirect(url_for("admin.manage_treks"))
     return render_template("admin/update_trek.html", trek=trek)
 
-@admin_bp.route("/delete_trek/<int:trek_id>", methods=["POST"])
+@admin_bp.route("/delete_trek/<int:trek_id>")
 @login_required
 def delete_trek(trek_id):
     if not is_admin():
@@ -107,7 +107,7 @@ def manage_users():
     users = User.query.filter_by(role= "user").all()
     return render_template("admin/manage_users.html", users= users)
 
-@admin_bp.route("/blacklist_user/<int:user_id>",methods=['POST'])
+@admin_bp.route("/blacklist_user/<int:user_id>")
 @login_required
 def blacklist_user(user_id):
     if not is_admin():
@@ -118,7 +118,7 @@ def blacklist_user(user_id):
         db.session.query(Trek).filter_by(assigned_staff_id = user.user_id).update({"assigned_staff_id": None})
     db.session.commit()
     flash("User blacklisted successfully!", "warning")
-    return redirect(url_for("admin.manage_staff"))
+    return redirect(request.referrer or url_for("admin.admin_dashboard"))
 
 @admin_bp.route("/manage_staff")
 @login_required
